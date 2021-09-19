@@ -18,12 +18,20 @@ import { User } from './user.entity';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   @Post('/signup')
   signUp(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
     console.log(authCredentialsDto)
     return this.authService.signUp(authCredentialsDto);
+  }
+
+
+  //example of microservice
+  @Post('add')
+  async accumulate(@Body('data') data: number[]) {
+    console.log(data)
+    return this.authService.accumulate(data)
   }
 
   @Post('/signin')

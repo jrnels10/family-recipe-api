@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
 import { AuthController } from './auth/auth.controller';
 import { GoogleUploadModule } from './google-upload/google-upload.module';
+import { SocialModule } from './social/social.module';
 
 @Module({
   imports: [RecipeModule, AuthModule, TypeOrmModule.forRoot(typeOrmConfig), GoogleUploadModule],

@@ -29,8 +29,8 @@ export class RecipeRepository extends Repository<Recipe> {
       query.where('recipe.privacy = false')
       searchQuery();
       query.orWhere('recipe.userId=:id', { id: user.id }) // return only public recipes
-      searchQuery();
     }
+    searchQuery();
 
     function searchQuery() {
       if (search) {
@@ -76,6 +76,20 @@ export class RecipeRepository extends Repository<Recipe> {
     delete recipe.user;
     const r = await recipe.save();
     return r;
+  }
+
+
+  async getChefs(id: number): Promise<Recipe[]>{
+    const query = this.createQueryBuilder('recipe')
+      .select('DISTINCT ON (LOWER(recipe.chef)) recipe.chef')
+      .where('recipe.userId = :id', { id })
+    try {
+      const recipe = await query.getRawMany();
+      return recipe;
+    } catch (error) {
+      this.logger.error(`Failed to get task"`, error.stack);
+      throw new InternalServerErrorException();
+    }
   }
 }
 

@@ -30,7 +30,9 @@ export class RecipeService {
   getAllRecipes(filterDto: GetRecipeDto, user?: User): Promise<Recipe[]> {
     return this.RecipeRepository.getAllRecipes(filterDto, user);
   }
-
+  getChefs(id: number): Promise<Recipe[]> {
+    return this.RecipeRepository.getChefs(id);
+  }
   createRecipe(
     CreateRecipeDto: CreateRecipeDto,
     user: User,

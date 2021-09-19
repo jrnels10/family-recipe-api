@@ -24,7 +24,7 @@ import { RecipeStatus } from './recipe.enum';
 @Controller('recipe')
 export class RecipeController {
   private logger = new Logger('RecipeController');
-  constructor(private recipeService: RecipeService) {}
+  constructor(private recipeService: RecipeService) { }
 
   @Post()
   @UseGuards(AuthGuard())
@@ -47,6 +47,12 @@ export class RecipeController {
   getAllRecipes(@Query(ValidationPipe) filterDto: GetRecipeDto) {
     console.log('ios')
     return this.recipeService.getAllRecipes(filterDto);
+  }
+
+  @Get('getChefs')
+  @UseGuards(AuthGuard())
+  getChefs(@GetUser() user: User) {
+    return this.recipeService.getChefs(user.id)
   }
 
   @Get('/:id')
