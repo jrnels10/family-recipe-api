@@ -19,7 +19,6 @@ import { CreateRecipeDto } from './dto/create-recipe-dto';
 import { Recipe } from './recipe.entity';
 import { RecipeService } from './recipe.service';
 import { GetRecipeDto } from './dto/get-recipe-dto';
-import { RecipeStatus } from './recipe.enum';
 
 @Controller('recipe')
 export class RecipeController {

@@ -27,6 +27,6 @@ export class Social extends BaseEntity {
         recipe => recipe.id,
         { eager: true },
     )
-    @JoinTable()
+    @JoinColumn()
     recipe: Recipe;
 }

@@ -5,7 +5,7 @@ import { User } from '../auth/user.entity';
 import { Recipe } from './recipe.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe-dto';
-import { RecipeStatus } from './recipe.enum';
+// import { RecipeStatus } from './recipe.enum';
 
 @Injectable()
 export class RecipeService {

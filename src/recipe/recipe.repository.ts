@@ -14,6 +14,8 @@ export class RecipeRepository extends Repository<Recipe> {
   async getAllRecipes(filterDto: GetRecipeDto, user?: User): Promise<Recipe[]> {
     const { privacy, search } = filterDto;
     const query = this.createQueryBuilder('recipe')
+      .leftJoinAndSelect('recipe.social', 'linkedSocial','linkedSocial.userId = :id',{id:user.id}) // returns all the bookmarked recipes from user.
+      .loadRelationCountAndMap('recipe.likes', 'recipe.social') // counts total number of socials per recipe.
       .leftJoin('recipe.photos', 'linkedPhotos')
       .addSelect(['linkedPhotos.id', 'linkedPhotos.fileName', 'linkedPhotos.fileUrl'])
 
@@ -22,7 +24,7 @@ export class RecipeRepository extends Repository<Recipe> {
       query.where('recipe.privacy = false') // return only public recipes
     }
     else if (privacy === 'private') {
-      query.where('recipe.privacy = true AND recipe.userId=:id', { id: user ? user.id : -1  }) // return only public recipes
+      query.where('recipe.privacy = true AND recipe.userId=:id', { id: user ? user.id : -1 }) // return only public recipes
       // query.andWhere('recipe.privacy = true')
     }
     else {

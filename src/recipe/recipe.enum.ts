@@ -1,6 +1,6 @@
-export enum RecipeStatus {
-  OPEN = 'OPEN',
-  CLOSED = 'CLOSED',
+export enum RecipeBookmarked {
+  BOOKED = 'bookmarked',
+  ALL = 'all',
 }
 
 

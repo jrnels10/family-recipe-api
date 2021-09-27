@@ -11,7 +11,6 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { RecipeStatus } from './recipe.enum';
 import { GoogleFiles } from '../google-upload/google-upload.entity';
 import { Social } from 'src/social/social.entity';
 
@@ -34,9 +33,6 @@ export class Recipe extends BaseEntity {
 
   @Column({ nullable: true })
   cookTime: string;
-
-  @Column({ default: 0 })
-  likes: number;
 
   @Column({ nullable: true })
   ingredients: string;
@@ -69,9 +65,9 @@ export class Recipe extends BaseEntity {
 
   @OneToMany(
     ()=> Social,
-    social => social.id
+    social => social.recipe
   )
-  @JoinTable()
+  @JoinColumn()
   social:Social[]
 
 }
