@@ -59,6 +59,7 @@ export class SocialRepository extends Repository<Social> {
             // then delete like from social
             this.delete(found.id)
         } else {
+            console.log(socialDto)
             // Otherwise create record for that new like from user.
             const social = this.create({ ...socialDto });
             try {

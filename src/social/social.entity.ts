@@ -1,6 +1,6 @@
 import { User } from "src/auth/user.entity";
 import { Recipe } from "src/recipe/recipe.entity";
-import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Social extends BaseEntity {
@@ -22,11 +22,11 @@ export class Social extends BaseEntity {
     )
     @JoinTable()
     user: User;
-    @OneToOne(
+    @ManyToOne(
         () => Recipe,
         recipe => recipe.id,
         { eager: true },
     )
-    @JoinColumn()
+    @JoinTable()
     recipe: Recipe;
 }
