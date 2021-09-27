@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import * as config from 'config';
 import { UserRepository } from './user.respository';
+import { RecipeRepository } from 'src/recipe/recipe.repository';
 
 const jwtConfig = config.get('jwt');
 @Module({
@@ -18,7 +19,8 @@ const jwtConfig = config.get('jwt');
         expiresIn: jwtConfig.expiresIn, // 1 hour
       },
     }),
-    TypeOrmModule.forFeature([UserRepository]),
+    TypeOrmModule.forFeature([UserRepository,RecipeRepository]),
+    
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

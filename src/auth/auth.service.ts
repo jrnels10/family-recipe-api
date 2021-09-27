@@ -17,7 +17,7 @@ export class AuthService {
 
   constructor(
     @InjectRepository(UserRepository)
-    private userepository: UserRepository,
+    private userRepository: UserRepository,
     private jwtService: JwtService,
   ) {
     this.client = ClientProxyFactory.create({
@@ -32,13 +32,13 @@ export class AuthService {
     return this.client.send<number, number[]>('add', data)
   }
   signUp(authcredentialsDto: AuthCredentialsDto): Promise<void> {
-    return this.userepository.signUp(authcredentialsDto);
+    return this.userRepository.signUp(authcredentialsDto);
   }
 
   async signin(
     authSignInCredentialsDto: AuthSignInCredentialsDto,
   ): Promise<{ accessToken: string; user: User }> {
-    const user = await this.userepository.validateUserPassword(
+    const user = await this.userRepository.validateUserPassword(
       authSignInCredentialsDto,
     );
     if (!user.email) {
@@ -55,6 +55,8 @@ export class AuthService {
 
   async findByPayLoad(payload: any) {
     const { userId } = payload;
-    return await this.userepository.findOne({ id: userId });
+    return await this.userRepository.findOne({ id: userId });
   }
+
 }
+// 

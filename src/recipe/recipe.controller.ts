@@ -45,7 +45,7 @@ export class RecipeController {
 
   @Get('getall')
   getAllRecipes(@Query(ValidationPipe) filterDto: GetRecipeDto) {
-    console.log('ios')
+    console.log('no user login')
     return this.recipeService.getAllRecipes(filterDto);
   }
 
@@ -65,23 +65,31 @@ export class RecipeController {
     return this.recipeService.getMyRecipes(userId);
   }
 
-  // @Patch(':id/status')
+  @Get('/like/:id') 
+  @UseGuards(AuthGuard())
+  likeRecipe(@Param('id') id: string) {
+    // return this.recipeService.getMyRecipes(userId);
+  }
+
+  // @Patch(':id')
   // @UseGuards(AuthGuard())
   // updateRecipeStatus(
   //   @Param('id', ParseIntPipe) id: number,
-  //   @Body('status', RecipeStatusValidationPipe) status: RecipeStatus,
+  //   // @Body('status', RecipeStatusValidationPipe) status: RecipeStatus,
+  //   @Body() recipe:Recipe,
   //   @GetUser() user: User,
   // ): Promise<Recipe> {
-  //   return this.recipeService.updateRecipeStatus(id, status, user);
+  //   return this.recipeService.updateRecipeStatus(id, recipe, user);
   // }
+  
 
-  @Patch(':id')
+  @Patch('/updateRecipeInfo/:id')
   @UseGuards(AuthGuard())
   updateRecipeInfo(
     @Param('id', ParseIntPipe) id: number,
     @Body() Recipe: Recipe,
     @GetUser() user: User,
-  ): Promise<Recipe> {
+  ): Promise < Recipe > {
     return this.recipeService.updateRecipeInfo(id, Recipe, user);
   }
 }

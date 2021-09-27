@@ -9,7 +9,10 @@ import {
   Column,
   Unique,
   OneToMany,
+  JoinTable,
+  ManyToMany,
 } from 'typeorm';
+import { Social } from 'src/social/social.entity';
 
 @Entity()
 @Unique(['email'])
@@ -32,6 +35,12 @@ export class User extends BaseEntity {
   @Column()
   salt: string;
 
+  @Column({ nullable: true })
+  bookmarks: string;
+
+  @Column({ default: '' })
+  likes: string
+
   @OneToMany(
     () => GoogleFiles,
     photo => photo.user,
@@ -40,11 +49,17 @@ export class User extends BaseEntity {
   photos: GoogleFiles[];
 
   @OneToMany(
-    type => Recipe,
+    () => Recipe,
     recipe => recipe.user,
     { eager: true },
   )
   recipes: Recipe[];
+  @ManyToMany(
+    () => Social,
+    social => social.userId,
+  )
+  @JoinTable()
+  socials: Social[];
 
   @Column({ nullable: true })
   createDate: Date;

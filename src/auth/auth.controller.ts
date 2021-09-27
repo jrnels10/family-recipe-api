@@ -6,6 +6,8 @@ import {
   UseGuards,
   Get,
   Req,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
 import {
   AuthCredentialsDto,
@@ -22,7 +24,6 @@ export class AuthController {
 
   @Post('/signup')
   signUp(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
-    console.log(authCredentialsDto)
     return this.authService.signUp(authCredentialsDto);
   }
 
@@ -60,4 +61,5 @@ export class AuthController {
   test(@GetUser() user: User) {
     console.log('test', user);
   }
+
 }

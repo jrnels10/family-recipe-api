@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { RecipeStatus } from './recipe.enum';
 import { GoogleFiles } from '../google-upload/google-upload.entity';
+import { Social } from 'src/social/social.entity';
 
 @Entity()
 export class Recipe extends BaseEntity {
@@ -24,7 +25,7 @@ export class Recipe extends BaseEntity {
   @Column({ nullable: true })
   chef: string;
 
-  @Column({default:true})
+  @Column({ default: true })
   privacy: boolean;
 
   @Column({ nullable: true })
@@ -32,6 +33,9 @@ export class Recipe extends BaseEntity {
 
   @Column({ nullable: true })
   cookTime: string;
+
+  @Column({ default: 0 })
+  likes: number;
 
   @Column({ nullable: true })
   ingredients: string;
@@ -61,4 +65,12 @@ export class Recipe extends BaseEntity {
 
   @Column({ nullable: true })
   updateDate: Date;
+
+  @OneToMany(
+    ()=> Social,
+    social => social.id
+  )
+  @JoinTable()
+  social:Social[]
+
 }

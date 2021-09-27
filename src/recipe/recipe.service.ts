@@ -27,6 +27,7 @@ export class RecipeService {
     }
     return found;
   }
+  
   getAllRecipes(filterDto: GetRecipeDto, user?: User): Promise<Recipe[]> {
     return this.RecipeRepository.getAllRecipes(filterDto, user);
   }
@@ -40,14 +41,28 @@ export class RecipeService {
     return this.RecipeRepository.createRecipe(CreateRecipeDto, user);
   }
 
-  async updateRecipeStatus(
+
+  bookmarkRecipe(id:number){
+    return this.RecipeRepository
+  }
+
+  likeRecipe(
+    user: User,
+    recipeId: number
+  ) {
+
+  }
+
+  async updateRecipe(
     id: number,
-    status: RecipeStatus,
+    recipe: Recipe,
     user: User,
   ): Promise<Recipe> {
-    const recipe = await this.RecipeRepository.findOne({
+    let found = await this.RecipeRepository.findOne({
       where: { id, userId: user.id },
     });
+
+    found
     await recipe.save();
     return recipe;
   }
@@ -61,8 +76,22 @@ export class RecipeService {
       where: { id, userId: user.id },
       relations: ['photos'],
     });
-    recipe.title = Recipe.title;
-    recipe.description = Recipe.description;
+    const { title, description, chef, ingredients, instructions } = Recipe;
+    if (title) {
+      recipe.title = Recipe.title;
+    }
+    if (description) {
+      recipe.description = description;
+    }
+    if (chef) {
+      recipe.chef = chef;
+    }
+    if (ingredients) {
+      recipe.ingredients = ingredients;
+    }
+    if (instructions) {
+      recipe.instructions = instructions;
+    }
     await recipe.save();
 
     return recipe;
